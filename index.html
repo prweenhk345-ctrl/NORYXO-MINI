@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NORYXO MINI</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, #24345f 0, transparent 32%),
+        radial-gradient(circle at bottom left, #4d1d73 0, transparent 32%),
+        #080b14;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 16px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c4dff, #00c8ff);
+      box-shadow: 0 12px 40px rgba(86, 96, 255, 0.35);
+    }
+
+    .brand h1 {
+      font-size: 30px;
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      margin-top: 8px;
+      color: #9ba7c2;
+      font-size: 14px;
+    }
+
+    .card {
+      background: rgba(18, 22, 36, 0.88);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 28px;
+      padding: 26px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 22px 70px rgba(0,0,0,0.35);
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0c101b;
+      padding: 5px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      border: 0;
+      background: transparent;
+      color: #8c97b1;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: white;
+      background: linear-gradient(135deg, #6748ff, #8c45e8);
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      color: #bec6da;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 15px;
+      border: 1px solid #293047;
+      background: #0b0f19;
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #7664ff;
+    }
+
+    .primary,
+    .google {
+      width: 100%;
+      padding: 15px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary {
+      margin-top: 20px;
+      border: 0;
+      color: white;
+      background: linear-gradient(135deg, #684bff, #a54bed);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0;
+      color: #68738d;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      background: #252b3d;
+      flex: 1;
+    }
+
+    .google {
+      background: #fff;
+      color: #151515;
+      border: 0;
+    }
+
+    #message {
+      min-height: 22px;
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+      color: #9fc2ff;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #65718b;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <section class="brand">
+      <div class="logo">N</div>
+      <h1>NORYXO MINI</h1>
+      <p>Ask • Search • Create</p>
+    </section>
+
+    <section class="card">
+
+      <div class="tabs">
+        <button id="signinTab" class="tab active" onclick="setMode('signin')">
+          Sign In
+        </button>
+
+        <button id="signupTab" class="tab" onclick="setMode('signup')">
+          Create Account
+        </button>
+      </div>
+
+      <label>Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+      />
+
+      <label>Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+      />
+
+      <button id="mainButton" class="primary" onclick="submitAuth()">
+        Sign In
+      </button>
+
+      <div class="divider">OR</div>
+
+      <button class="google" onclick="googleLogin()">
+        Continue with Google
+      </button>
+
+      <div id="message"></div>
+
+    </section>
+
+    <div class="footer">
+      © NORYXO MINI • Personal AI Assistant
+    </div>
+
+  </main>
+
+  <script>
+    /*
+      IMPORTANT:
+      We will add your real NORYXO MINI Supabase values in the next step.
+
+      Use ONLY:
+      - Project URL
+      - anon / publishable key
+
+      NEVER put your Service Role Secret here.
+    */
+
+    const SUPABASE_URL = "YOUR_SUPABASE_URL";
+    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+    const sb = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    let mode = "signin";
+
+    function setMode(value) {
+      mode = value;
+
+      document
+        .getElementById("signinTab")
+        .classList.toggle("active", mode === "signin");
+
+      document
+        .getElementById("signupTab")
+        .classList.toggle("active", mode === "signup");
+
+      document.getElementById("mainButton").textContent =
+        mode === "signin" ? "Sign In" : "Create Account";
+
+      showMessage("");
+    }
+
+    function showMessage(text) {
+      document.getElementById("message").textContent = text;
+    }
+
+    async function submitAuth() {
+
+      if (SUPABASE_URL.includes("YOUR_")) {
+        showMessage("Supabase connection will be added next.");
+        return;
+      }
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("Please enter email and password.");
+        return;
+      }
+
+      showMessage("Please wait...");
+
+      if (mode === "signup") {
+
+        const { error } = await sb.auth.signUp({
+          email,
+          password
+        });
+
+        if (error) {
+          showMessage(error.message);
+          return;
+        }
+
+        showMessage("Account created. Check your email if confirmation is required.");
+
+      } else {
+
+        const { error } =
+          await sb.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) {
+          showMessage(error.message);
+          return;
+        }
+
+        showMessage("Login successful.");
+      }
+    }
+
+    async function googleLogin() {
+
+      if (SUPABASE_URL.includes("YOUR_")) {
+        showMessage("Supabase connection will be added next.");
+        return;
+      }
+
+      const { error } =
+        await sb.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.href
+          }
+        });
+
+      if (error) {
+        showMessage(error.message);
+      }
+    }
+  </script>
+
+</body>
+</html>
