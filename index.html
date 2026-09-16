@@ -344,6 +344,31 @@
         showMessage(error.message);
       }
     }
+ // Handle Supabase login session after redirect
+async function checkSession() {
+  const { data: { session }, error } = await sb.auth.getSession();
+
+  if (error) {
+    console.error("Session error:", error.message);
+    return;
+  }
+
+  if (session) {
+    console.log("Logged in:", session.user.email);
+
+    // Remove OAuth tokens from the URL after successful login
+    if (window.location.hash) {
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+    }
+  }
+}
+
+checkSession();
+  
   </script>
 
 </body>
