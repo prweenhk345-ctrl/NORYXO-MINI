@@ -355,7 +355,8 @@ async function checkSession() {
 
   if (session) {
     console.log("Logged in:", session.user.email);
-
+window.location.href = "app.html";
+ }
     // Remove OAuth tokens from the URL after successful login
     if (window.location.hash) {
       window.history.replaceState(
