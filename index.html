@@ -355,7 +355,7 @@ async function checkSession() {
 
   if (session) {
     console.log("Logged in:", session.user.email);
-alert("Google Login Success: " + session.user.email);
+
     // Remove OAuth tokens from the URL after successful login
     if (window.location.hash) {
       window.history.replaceState(
