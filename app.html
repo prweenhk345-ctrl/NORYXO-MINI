@@ -361,7 +361,7 @@ chatMessages.appendChild(userBubble);
 
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
-aiBubble.textContent = data.reply;
+aiBubble.innerHTML = data.reply.replace(/\n/g, "<br>");
    conversationHistory.push(
   { role: "user", content: message },
   { role: "assistant", content: data.reply }
