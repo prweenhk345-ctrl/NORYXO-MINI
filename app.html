@@ -251,7 +251,7 @@
 
       <div class="quick-actions">
 
-        <div class="card" onclick="quickPrompt('Help me write something')">
+        <div class="card" onclick="<div class="card" onclick="writeMode()">)">
           ✍️
           <strong>Write</strong>
         </div>
@@ -303,6 +303,10 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
   }
   function searchMode() {
   promptInput.value = "Search the web for: ";
+  promptInput.focus();
+}
+  function writeMode() {
+  promptInput.value = "Write a ";
   promptInput.focus();
 }
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
