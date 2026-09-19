@@ -361,7 +361,11 @@ chatMessages.appendChild(userBubble);
 
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
-aiBubble.innerHTML = data.reply.replace(/\n/g, "<br>");
+const formattedReply = data.reply
+  .replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">🔗 Source</a>')
+  .replace(/\n/g, "<br>");
+
+aiBubble.innerHTML = formattedReply;
    conversationHistory.push(
   { role: "user", content: message },
   { role: "assistant", content: data.reply }
