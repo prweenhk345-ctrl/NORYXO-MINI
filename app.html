@@ -357,11 +357,12 @@ chatMessages.appendChild(userBubble);
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
 aiBubble.textContent = data.reply;
-    conversationHistory.push(
-      localStorage.setItem("noryxoChat", JSON.stringify(conversationHistory));
+   conversationHistory.push(
   { role: "user", content: message },
   { role: "assistant", content: data.reply }
 );
+
+localStorage.setItem("noryxoChat", JSON.stringify(conversationHistory));
 chatMessages.appendChild(aiBubble);
 document.getElementById("prompt").value = "";    
   } catch (error) {
