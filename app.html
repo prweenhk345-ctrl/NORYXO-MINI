@@ -343,6 +343,7 @@ const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
 aiBubble.textContent = data.reply;
 chatMessages.appendChild(aiBubble);
+document.getElementById("prompt").value = "";    
   } catch (error) {
     console.error(error);
     alert("NORYXO MINI Error:\n" + error.message);
