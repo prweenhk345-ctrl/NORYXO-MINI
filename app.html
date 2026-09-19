@@ -185,7 +185,19 @@
       .welcome {
         margin-top: 35px;
       }
-    }
+   }
+  #aiReply {
+  display: none;
+  margin: 18px auto;
+  max-width: 760px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  text-align: left;
+}  
   </style>
 </head>
 
@@ -243,7 +255,7 @@
       <button class="send" onclick="sendMessage()">➤</button>
 
     </div>
-
+<div id="aiReply"></div>
   </main>
 
   <footer>
@@ -293,8 +305,8 @@ async function sendMessage() {
       throw new Error(data.error || "AI request failed");
     }
 
-    alert("NORYXO MINI:\n\n" + data.reply);
-
+  document.getElementById("aiReply").textContent = data.reply;
+document.getElementById("aiReply").style.display = "block";
   } catch (error) {
     console.error(error);
     alert("NORYXO MINI Error:\n" + error.message);
