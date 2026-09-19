@@ -261,13 +261,13 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
     promptInput.value = text;
     promptInput.focus();
   }
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 async function sendMessage() {
   const message = promptInput.value.trim();
   if (!message) return;
 
   try {
-    const { data: { session } } = await sb.auth.getSession();
+    const { data: { session } } = await noryxoClient.auth.getSession();
 
     if (!session) {
       window.location.href = "index.html";
