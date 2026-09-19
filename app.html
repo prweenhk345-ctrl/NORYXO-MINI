@@ -301,6 +301,7 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
     promptInput.focus();
   }
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let conversationHistory = [];
 async function sendMessage() {
   const message = promptInput.value.trim();
   if (!message) return;
@@ -325,7 +326,10 @@ document.getElementById("chatMessages").appendChild(thinkingBubble);
           "Authorization": `Bearer ${session.access_token}`,
           "apikey": SUPABASE_ANON_KEY
         },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({
+  message,
+  history: conversationHistory
+})
       }
     );
 
@@ -345,6 +349,10 @@ chatMessages.appendChild(userBubble);
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
 aiBubble.textContent = data.reply;
+    conversationHistory.push(
+  { role: "user", content: message },
+  { role: "assistant", content: data.reply }
+);
 chatMessages.appendChild(aiBubble);
 document.getElementById("prompt").value = "";    
   } catch (error) {
@@ -354,6 +362,7 @@ document.getElementById("prompt").value = "";
 }
 
 function newChat() {
+  conversationHistory = [];
   document.getElementById("chatMessages").innerHTML = "";
   document.getElementById("prompt").value = "";
   document.getElementById("prompt").focus();
