@@ -350,8 +350,10 @@ document.getElementById("prompt").value = "";
   }
 }
 
- function newChat() {
-  alert("NORYXO MINI button works!");
+function newChat() {
+  document.getElementById("chatMessages").innerHTML = "";
+  document.getElementById("prompt").value = "";
+  document.getElementById("prompt").focus();
 }
 
   promptInput.addEventListener("keydown", function(event) {
