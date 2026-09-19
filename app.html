@@ -256,7 +256,7 @@
           <strong>Write</strong>
         </div>
 
-        <div class="card" onclick="quickPrompt('Help me search for information')">
+        <div class="card" onclick="searchMode()">
           🔎
           <strong>Search</strong>
         </div>
@@ -297,6 +297,10 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
   const promptInput = document.getElementById("prompt");
 
   function quickPrompt(text) {
+    function searchMode() {
+  promptInput.value = "Search the web for: ";
+  promptInput.focus();
+}
     promptInput.value = text;
     promptInput.focus();
   }
