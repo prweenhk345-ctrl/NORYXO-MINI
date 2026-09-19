@@ -297,13 +297,14 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
   const promptInput = document.getElementById("prompt");
 
   function quickPrompt(text) {
-    function searchMode() {
-  promptInput.value = "Search the web for: ";
-  promptInput.focus();
-}
+ 
     promptInput.value = text;
     promptInput.focus();
   }
+  function searchMode() {
+  promptInput.value = "Search the web for: ";
+  promptInput.focus();
+}
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let conversationHistory = [];
   const savedChat = JSON.parse(localStorage.getItem("noryxoChat") || "[]");
