@@ -312,7 +312,10 @@ async function sendMessage() {
       window.location.href = "index.html";
       return;
     }
-
+const thinkingBubble = document.createElement("div");
+thinkingBubble.className = "ai-message";
+thinkingBubble.textContent = "NORYXO MINI is thinking... ⏳";
+document.getElementById("chatMessages").appendChild(thinkingBubble);
     const response = await fetch(
       `${SUPABASE_URL}/functions/v1/noryxo-ai`,
       {
@@ -327,7 +330,7 @@ async function sendMessage() {
     );
 
     const data = await response.json();
-
+thinkingBubble.remove();
     if (!response.ok) {
       throw new Error(data.error || "AI request failed");
     }
