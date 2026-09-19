@@ -302,6 +302,14 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
   }
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let conversationHistory = [];
+  const savedChat = JSON.parse(localStorage.getItem("noryxoChat") || "[]");
+  conversationHistory = savedChat;
+  savedChat.forEach((item) => {
+  const bubble = document.createElement("div");
+  bubble.className = item.role === "user" ? "user-message" : "ai-message";
+  bubble.textContent = item.content;
+  document.getElementById("chatMessages").appendChild(bubble);
+});
 async function sendMessage() {
   const message = promptInput.value.trim();
   if (!message) return;
@@ -350,6 +358,7 @@ const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
 aiBubble.textContent = data.reply;
     conversationHistory.push(
+      localStorage.setItem("noryxoChat", JSON.stringify(conversationHistory));
   { role: "user", content: message },
   { role: "assistant", content: data.reply }
 );
@@ -363,6 +372,7 @@ document.getElementById("prompt").value = "";
 
 function newChat() {
   conversationHistory = [];
+  localStorage.removeItem("noryxoChat");
   document.getElementById("chatMessages").innerHTML = "";
   document.getElementById("prompt").value = "";
   document.getElementById("prompt").focus();
