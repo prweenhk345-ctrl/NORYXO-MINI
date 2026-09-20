@@ -309,10 +309,13 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
  promptInput.value = "Choose: Caption • Social Media Post • Letter • Story • Custom Writing — ";
   promptInput.focus();
 }
+let createImageMode = false;
+
 function createMode() {
-  promptInput.value = "Create: ";
+  createImageMode = true;
+  promptInput.value = "Create an image of: ";
   promptInput.focus();
-}  
+}
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let conversationHistory = [];
   const savedChat = JSON.parse(localStorage.getItem("noryxoChat") || "[]");
@@ -350,7 +353,8 @@ document.getElementById("chatMessages").appendChild(thinkingBubble);
         body: JSON.stringify({
   message,
   history: conversationHistory,
-  search: message.startsWith("Search the web for:")        
+  search: message.startsWith("Search the web for:"),
+  createImage: createImageMode        
 })
       }
     );
@@ -367,7 +371,21 @@ const userBubble = document.createElement("div");
 userBubble.className = "user-message";
 userBubble.textContent = message;
 chatMessages.appendChild(userBubble);
+if (data.image) {
+  const image = document.createElement("img");
+  image.src = `data:image/png;base64,${data.image}`;
+  image.style.maxWidth = "100%";
+  image.style.borderRadius = "16px";
+  image.style.marginTop = "10px";
 
+  const imageBubble = document.createElement("div");
+  imageBubble.className = "ai-message";
+  imageBubble.appendChild(image);
+  chatMessages.appendChild(imageBubble);
+
+  createImageMode = false;
+  return;
+}
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
 const formattedReply = data.reply
