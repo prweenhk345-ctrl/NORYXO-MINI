@@ -309,6 +309,10 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
  promptInput.value = "Choose: Caption • Social Media Post • Letter • Story • Custom Writing — ";
   promptInput.focus();
 }
+function createMode() {
+  promptInput.value = "Create: ";
+  promptInput.focus();
+}  
 const noryxoClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let conversationHistory = [];
   const savedChat = JSON.parse(localStorage.getItem("noryxoChat") || "[]");
