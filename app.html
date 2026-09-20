@@ -395,7 +395,7 @@ if (data.image) {
 }
 const aiBubble = document.createElement("div");
 aiBubble.className = "ai-message";
-const formattedReply = data.reply
+const formattedReply = (data.reply || "")
   .replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">🔗 Source</a>')
   .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
   .replace(/\n/g, "<br>");
