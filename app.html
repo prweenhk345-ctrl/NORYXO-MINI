@@ -345,7 +345,8 @@ document.getElementById("chatMessages").appendChild(thinkingBubble);
         },
         body: JSON.stringify({
   message,
-  history: conversationHistory
+  history: conversationHistory,
+  search: message.startsWith("Search the web for:")        
 })
       }
     );
