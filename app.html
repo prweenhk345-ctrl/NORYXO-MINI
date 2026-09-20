@@ -260,7 +260,10 @@
           🔎
           <strong>Search</strong>
         </div>
-
+<div class="card" onclick="movieMode()">
+  🎬
+  <strong>Movies</strong>
+</div>
        <div class="card" onclick="createMode()">
           ✨
           <strong>Create</strong>
@@ -303,6 +306,9 @@ const SUPABASE_URL = "https://msielrndkqkmpkcloldj.supabase.co";
   }
   function searchMode() {
   promptInput.value = "Search the web for: ";
+  promptInput.focus();
+}function movieMode() {
+  promptInput.value = "Search the web for legal streaming or download options for this movie: ";
   promptInput.focus();
 }
   function writeMode() {
