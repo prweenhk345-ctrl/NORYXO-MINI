@@ -360,7 +360,7 @@ document.getElementById("chatMessages").appendChild(thinkingBubble);
         body: JSON.stringify({
   message,
   history: conversationHistory,
-  search: message.startsWith("Search the web for:"),
+search: message.startsWith("Search the web for:") || message.startsWith("Search the web for legal streaming or download options for this movie:"),
   createImage: createImageMode        
 })
       }
